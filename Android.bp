@@ -1,0 +1,47 @@
+// Copyright (C) 2020 RevengeOS
+// 
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+android_app {
+    name: "com.revengeos.platform-res",
+    certificate: "platform",
+    sdk_version: "core_platform",
+    manifest: "revengeos/res/AndroidManifest.xml",
+
+    aaptflags: [
+        "--auto-add-overlay",
+        "--private-symbols",
+        "com.revengeos.platform.internal",
+
+        // Framework doesn't need versioning since it IS the platform.
+        "--no-auto-version",
+
+        // Tell aapt to create "extending (non-application)" resource IDs,
+        // since these resources will be used by many apps.
+        "--allow-reserved-package-id",
+        // Use id 0x3f (one less than app id).
+        "--package-id",
+        "63",
+    ],
+
+    resource_dirs: [
+        "revengeos/res/res",
+    ],
+
+    // Create package-export.apk, which other packages can use to get
+    // PRODUCT-agnostic resource data like IDs and type definitions.
+    export_package_resources: true,
+}
+ 
